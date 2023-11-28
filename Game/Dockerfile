@@ -7,8 +7,11 @@ WORKDIR /usr/src/app
 # Copiar el contenido de tu proyecto al contenedor
 COPY . .
 
-# Instalar Pygame y cualquier otra dependencia que puedas necesitar
+# Instalar Pygame
 RUN pip install pygame
+
+# Instalar herramientas para testing, linting y code coverage
+RUN pip install pytest pylint coverage
 
 # Comando para ejecutar tu juego
 CMD ["python", "main.py"]

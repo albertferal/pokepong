@@ -1,8 +1,9 @@
 version: 2.1
+
 jobs:
   build:
     docker:
-      - image: python:3.9  # Versión de Python que necesitas
+      - image: feralbert90/pokepong1:latest  # Dockerfile que se necesita de dockerhub
 
     steps:
       - checkout  # Para obtener el código del repositorio
@@ -12,13 +13,21 @@ jobs:
           command: |
             pip install pygame
 
-      # Aquí agregas los pasos para ejecutar tests, linting, análisis estático, etc.
-      # Ejemplo:
+      # Aquí agregamos los pasos para ejecutar tests, linting, análisis estático, etc.
+
       - run:
           name: Run tests
-          command: pytest
-
-      # Puedes agregar más pasos según tus necesidades (análisis de vulnerabilidades, etc.)
+          command: | 
+                    pytest game
+      - run:
+          name: Run linting
+          command: | 
+                    pylint game
+      - run:
+          name: Run code coverage
+          command: |
+                    coverage run -m pytest game
+                    coverage report -m 
 
       # En la rama master/main, genera un artefacto de la aplicación
       - run:
