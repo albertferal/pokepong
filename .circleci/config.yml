@@ -1,0 +1,48 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: python:3.9  # Versión de Python que necesitas
+
+    steps:
+      - checkout  # Para obtener el código del repositorio
+
+      - run:
+          name: Install dependencies
+          command: |
+            pip install pygame
+
+      # Aquí agregas los pasos para ejecutar tests, linting, análisis estático, etc.
+      # Ejemplo:
+      - run:
+          name: Run tests
+          command: pytest
+
+      # Puedes agregar más pasos según tus necesidades (análisis de vulnerabilidades, etc.)
+
+      # En la rama master/main, genera un artefacto de la aplicación
+      - run:
+          name: Build artifact
+          command: |
+            # Comandos para generar el artefacto (por ejemplo, un archivo .tar)
+            # Solo se ejecuta en la rama master/main
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
+              # Comandos para generar el artefacto
+            fi
+
+      # Publica el artefacto en un repositorio de artefactos (ejemplo: Docker Hub)
+      - run:
+          name: Publish artifact
+          command: |
+            # Comandos para publicar el artefacto en Docker Hub
+            # Solo se ejecuta en la rama master/main
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
+              # Comandos para publicar el artefacto
+            fi
+
+workflows:
+  build-and-deploy:
+    jobs:
+      - build
+      # Agrega un trabajo para desplegar en Kubernetes usando ArgoCD
+      # Este trabajo solo se ejecutará en la rama master/main
