@@ -1,6 +1,5 @@
 import pygame
 import sys
-from constants import *
 
 # Inicializamos Pygame
 pygame.init()
@@ -8,6 +7,17 @@ pygame.init()
 #goal_sound = pygame.mixer.Sound('assets\pokegol.mp3') 
 #hit_sound = pygame.mixer.Sound("assets\pokehit.mp3")
 
+# Definimos algunas constantes
+WIDTH, HEIGHT = 800, 600
+BALL_RADIUS = 15
+PADDLE_WIDTH, PADDLE_HEIGHT = 15, 130
+FPS = 60
+
+# Definimos colores
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+BLUE = (28, 5, 171)
+RED = (209, 17, 26)
 
 # Creamos la pantalla
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -32,11 +42,11 @@ def handle_events():
             pygame.quit()
             sys.exit()
 
-ball_image = pygame.image.load("PKBALL.png").convert_alpha()  # Reemplaza 'nombre_de_la_imagen.png' con tu nombre de archivo
+ball_image = pygame.image.load("Game\PKBALL.png").convert_alpha()  # Reemplaza 'nombre_de_la_imagen.png' con tu nombre de archivo
 ball_image = pygame.transform.scale(ball_image, (BALL_RADIUS * 3, BALL_RADIUS * 3))  # Cambiar el tamaño de la imagen
 ball_image.set_colorkey((255, 255, 255))
 
-background_image = pygame.image.load("SCREENIMG2.png").convert()
+background_image = pygame.image.load("Game\SCREENIMG2.png").convert()
 ball_angle = 0  # Ángulo inicial de rotación
 
 
