@@ -1,20 +1,16 @@
 version: 2.1
 
-jobs:
-  build:
+executors:
+  pythonpygame:
     docker:
       - image: feralbert90/pokepong1:latest  # Dockerfile que se necesita de dockerhub
 
+jobs:
+  job-testing:
+    executor: pythonpygame
     steps:
       - checkout  # Para obtener el código del repositorio
-
-      - run:
-          name: Install dependencies
-          command: |
-            pip install pygame
-
       # Aquí agregamos los pasos para ejecutar tests, linting, análisis estático, etc.
-
       - run:
           name: Run tests
           command: | 
@@ -29,29 +25,9 @@ jobs:
                     coverage run -m pytest game
                     coverage report -m 
 
-      # En la rama master/main, genera un artefacto de la aplicación
-      - run:
-          name: Build artifact
-          command: |
-            # Comandos para generar el artefacto (por ejemplo, un archivo .tar)
-            # Solo se ejecuta en la rama master/main
-            if [ "$CIRCLE_BRANCH" == "master" ]; then
-              # Comandos para generar el artefacto
-            fi
-
-      # Publica el artefacto en un repositorio de artefactos (ejemplo: Docker Hub)
-      - run:
-          name: Publish artifact
-          command: |
-            # Comandos para publicar el artefacto en Docker Hub
-            # Solo se ejecuta en la rama master/main
-            if [ "$CIRCLE_BRANCH" == "master" ]; then
-              # Comandos para publicar el artefacto
-            fi
-
 workflows:
-  build-and-deploy:
+  workflow-testing:
     jobs:
-      - build
+      - job-testing
       # Agrega un trabajo para desplegar en Kubernetes usando ArgoCD
       # Este trabajo solo se ejecutará en la rama master/main
