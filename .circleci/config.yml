@@ -15,10 +15,10 @@ jobs:
           name: Run tests
           command: | 
                     pytest Game/tests
-    #  - run:
-    #      name: Run linting
-    #      command: | 
-    #                pylint Game
+      - run:
+          name: Run linting
+          command: | 
+                    pylint Game
     #  - run:
     #      name: Run code coverage
     #      command: |
