@@ -14,15 +14,15 @@ jobs:
       - run:
           name: Run tests
           command: | 
-                    pytest game/tests
+                    pytest Game/tests
       - run:
           name: Run linting
           command: | 
-                    pylint game
+                    pylint Game
       - run:
           name: Run code coverage
           command: |
-                    coverage run -m pytest game
+                    coverage run -m pytest Game
                     coverage report -m 
 
 workflows:
