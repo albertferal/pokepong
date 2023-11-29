@@ -24,7 +24,9 @@ jobs:
           command: |
                     coverage run -m pytest Game
                     coverage report -m 
-
+  job-artifacts:
+    executor: pythonpygame
+    steps:
       - run:
           name: Save Dockerfile as artifact
           command: |
@@ -37,5 +39,6 @@ workflows:
   workflow-testing:
     jobs:
       - job-tests
+      - job-artifacts
       # Agrega un trabajo para desplegar en Kubernetes usando ArgoCD
       # Este trabajo solo se ejecutará en la rama master/main
