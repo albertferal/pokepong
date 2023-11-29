@@ -6,7 +6,7 @@ executors:
       - image: feralbert90/pokepong1:latest  # Dockerfile que se necesita de dockerhub
 
 jobs:
-  job-testing:
+  job-tests:
     executor: pythonpygame
     steps:
       - checkout  # Para obtener el código del repositorio
@@ -29,13 +29,13 @@ jobs:
           name: Save Dockerfile as artifact
           command: |
                     mkdir -p artifacts
-                    cp Game/Dockerfile artifacts/
+                    cp Dockerfile artifacts/
                     # Opcionalmente, puedes almacenar el Dockerfile en un directorio específico (aquí "artifacts").
 
 
 workflows:
   workflow-testing:
     jobs:
-      - job-testing
+      - job-tests
       # Agrega un trabajo para desplegar en Kubernetes usando ArgoCD
       # Este trabajo solo se ejecutará en la rama master/main
