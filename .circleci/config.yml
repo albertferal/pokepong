@@ -28,7 +28,7 @@ jobs:
   job-artifacts:
     executor: pythonpygame
     steps:
-      -checkout
+      - checkout
       - run:
           name: Save Dockerfile as artifact
           command: |
