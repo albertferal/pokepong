@@ -29,7 +29,7 @@ jobs:
           name: Save Dockerfile as artifact
           command: |
                     mkdir -p artifacts
-                    cp Dockerfile artifacts/
+                    cp Game/Dockerfile artifacts/
                     # Opcionalmente, puedes almacenar el Dockerfile en un directorio específico (aquí "artifacts").
 
 
