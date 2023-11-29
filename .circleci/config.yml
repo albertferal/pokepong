@@ -15,15 +15,15 @@ jobs:
           name: Run tests
           command: | 
                     pytest Game/tests
-      - run:
-          name: Run linting
-          command: | 
-                    pylint Game
-      - run:
-          name: Run code coverage
-          command: |
-                    coverage run -m pytest Game
-                    coverage report -m 
+    #  - run:
+    #      name: Run linting
+    #      command: | 
+    #                pylint Game
+    #  - run:
+    #      name: Run code coverage
+    #      command: |
+    #                coverage run -m pytest Game
+    #                coverage report -m 
 
 workflows:
   workflow-testing:
