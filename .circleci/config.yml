@@ -18,7 +18,7 @@ jobs:
       - run:
           name: Run linting
           command: | 
-                    pylint  -exit zero Game
+                    pylint  --exit-zero Game
     #  - run:
     #      name: Run code coverage
     #      command: |
