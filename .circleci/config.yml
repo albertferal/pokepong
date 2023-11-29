@@ -25,6 +25,14 @@ jobs:
                     coverage run -m pytest Game
                     coverage report -m 
 
+      - run:
+          name: Save Dockerfile as artifact
+          command: |
+                    mkdir -p artifacts
+                    cp Dockerfile artifacts/
+                    # Opcionalmente, puedes almacenar el Dockerfile en un directorio específico (aquí "artifacts").
+
+
 workflows:
   workflow-testing:
     jobs:
