@@ -14,7 +14,7 @@ jobs:
       - run:
           name: Run tests
           command: | 
-                    pytest game
+                    pytest game/tests
       - run:
           name: Run linting
           command: | 
