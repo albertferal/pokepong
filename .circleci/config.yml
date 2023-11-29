@@ -19,11 +19,11 @@ jobs:
           name: Run linting
           command: | 
                     pylint  --exit-zero Game
-    #  - run:
-    #      name: Run code coverage
-    #      command: |
-    #                coverage run -m pytest Game
-    #                coverage report -m 
+      - run:
+          name: Run code coverage
+          command: |
+                    coverage run -m pytest Game
+                    coverage report -m 
 
 workflows:
   workflow-testing:
