@@ -1,6 +1,6 @@
 import pygame
 import sys
-
+import os
 # Inicializamos Pygame
 pygame.init()
 #pygame.mixer.init()  # Inicializa el módulo de sonido
@@ -42,11 +42,11 @@ def handle_events():
             pygame.quit()
             sys.exit()
 
-ball_image = pygame.image.load("Game\PKBALL.png").convert_alpha()  # Reemplaza 'nombre_de_la_imagen.png' con tu nombre de archivo
+ball_image = pygame.image.load(os.path.join("Game", "PKBALL.png")).convert_alpha()  # Reemplaza 'nombre_de_la_imagen.png' con tu nombre de archivo
 ball_image = pygame.transform.scale(ball_image, (BALL_RADIUS * 3, BALL_RADIUS * 3))  # Cambiar el tamaño de la imagen
 ball_image.set_colorkey((255, 255, 255))
 
-background_image = pygame.image.load("Game\SCREENIMG2.png").convert()
+background_image = pygame.image.load(os.path.join("Game", "SCREENIMG2.png")).convert()
 ball_angle = 0  # Ángulo inicial de rotación
 
 
