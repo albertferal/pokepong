@@ -52,6 +52,8 @@ workflows:
       - job-tests:
           context: SonarCloud
       - job-deployment:
+          requires:
+            - job-tests
           filters:
             branches:
               only: main
