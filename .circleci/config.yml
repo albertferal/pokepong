@@ -36,9 +36,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install zip
+          name: Install zip and jq
           command: |
-            apt-get update && apt-get install -y zip
+            apt-get update && apt-get install -y zip jq
       - run:
           name: Package artifact
           command: |
