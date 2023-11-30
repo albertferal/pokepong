@@ -31,7 +31,7 @@ jobs:
           path: Game/tests/test-results.xml
       - sonarcloud/scan
 
-  job-artifacts:
+  job-deploy:
     executor: pythonpygame
     steps:
       - checkout
@@ -40,7 +40,15 @@ jobs:
           command: |
                     mkdir -p artifacts
                     cp Game/Dockerfile artifacts/
-                    # Opcionalmente, puedes almacenar el Dockerfile en un directorio específico (aquí "artifacts").
+      - run: 
+          name: Build and tag Docker image
+          command: |
+                    docker build -t feralbert90/pokepong_artif:latest -f artifacts/Dockerfile .
+      - run:
+          name: Publish Docker image to Docker Hub
+          command: |
+                    echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+                    docker push feralbert90/pokepong_artif:latest
 
 
 workflows:
@@ -48,6 +56,9 @@ workflows:
     jobs:
       - job-tests:
           context: SonarCloud
-      - job-artifacts
+      - job-deploy:
+          context: DockerHub
+          requires:
+            - job-tests
       # Agrega un trabajo para desplegar en Kubernetes usando ArgoCD
       # Este trabajo solo se ejecutará en la rama master/main
