@@ -44,12 +44,6 @@ jobs:
           command: |
             mkdir -p artifacts
             zip -r artifacts/myapp.zip Game/*
-      - run:
-          name: Upload artifact to GitHub Releases
-          command: |
-            TAG_NAME="v1.0.0"
-            gh release create "$TAG_NAME" artifacts/myapp.zip
-
 
 workflows:
   workflow-testing:
@@ -57,7 +51,6 @@ workflows:
       - job-tests:
           context: SonarCloud
       - job-deployment:
-          context: GitHubReleases
           requires:
             - job-tests
           filters:
