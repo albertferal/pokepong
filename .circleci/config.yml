@@ -36,6 +36,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Set up GH_TOKEN
+          command: |
+            echo 'export GH_TOKEN=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e' >> $BASH_ENV
+            source $BASH_ENV
+      - run:
           name: Install gh
           command: |
             curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
