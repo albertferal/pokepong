@@ -36,19 +36,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install zip and GCloud SDK
+          name: Install zip
           command: |
             apt-get update && apt-get install -y zip
-            curl -sSL https://sdk.cloud.google.com | bash
-            exec -l $SHELL
-            gcloud auth activate-service-account --key-file=service-account-file.json
       - run:
-          name: Upload artifact to Google Cloud Storage
+          name: Package artifact
           command: |
             mkdir -p artifacts
             zip -r artifacts/myapp.zip Game/*
-            gsutil cp artifacts/myapp.zip gs://pokepong-circleci/
-  
+
 workflows:
   workflow-testing:
     jobs:
