@@ -47,7 +47,7 @@ jobs:
       - run:
           name: Publish to GitHub Releases
           command: |
-            TAG=$(git describe --tags)
+            TAG=$(git rev-parse HEAD)
             curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
               -H "Content-Type: application/zip" \
               --data-binary "@artifacts/myapp.zip" \
