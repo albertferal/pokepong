@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  sonarcloud: sonarsource/sonarcloud@2.0.0
+
 executors:
   pythonpygame:
     docker:
@@ -26,6 +29,8 @@ jobs:
                     coverage report -m 
       - store_test_results:
           path: Game/tests/test-results.xml
+      - sonarcloud/scan
+
   job-artifacts:
     executor: pythonpygame
     steps:
@@ -41,7 +46,8 @@ jobs:
 workflows:
   workflow-testing:
     jobs:
-      - job-tests
+      - job-tests:
+          context: SonarCloud
       - job-artifacts
       # Agrega un trabajo para desplegar en Kubernetes usando ArgoCD
       # Este trabajo solo se ejecutará en la rama master/main
