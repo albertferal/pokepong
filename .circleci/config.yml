@@ -47,11 +47,9 @@ jobs:
       - run:
           name: Publish to GitHub Releases
           command: |
-            TAG=$(git rev-parse HEAD)
-            curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
-              -H "Content-Type: application/zip" \
-              --data-binary "@artifacts/myapp.zip" \
-              "https://uploads.github.com/repos/albertferal/artifact-circleci/releases/$TAG/assets?name=myapp.zip"
+            git add artifacts/myapp.zip
+            git commit -m "Agregar artefacto myapp.zip"
+            git push origin main
 
 
 workflows:
