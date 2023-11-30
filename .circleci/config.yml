@@ -24,7 +24,8 @@ jobs:
           command: |
                     coverage run -m pytest Game
                     coverage report -m 
-
+      - store_test_results:
+          path: test-results.xml
   job-artifacts:
     executor: pythonpygame
     steps:
