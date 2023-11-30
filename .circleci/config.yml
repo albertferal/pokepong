@@ -45,6 +45,11 @@ jobs:
             mkdir -p artifacts
             zip -r artifacts/myapp.zip Game/*
       - run:
+          name: Set Git Identity
+          command: |
+            git config user.email "albertferal@gmail.com"
+            git config user.name "albertferal"
+      - run:
           name: Publish to GitHub Releases
           command: |
             git add artifacts/myapp.zip
