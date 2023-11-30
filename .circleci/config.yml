@@ -36,6 +36,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install zip
+          command: |
+            apt-get update && apt-get install -y zip
+      - run:
           name: Package artifact
           command: |
             mkdir -p artifacts
