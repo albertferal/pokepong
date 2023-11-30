@@ -40,6 +40,11 @@ jobs:
           command: |
             mkdir -p artifacts
             tar -czvf artifacts/myapp.tar.gz Game/*
+      
+      - run:
+          name: Upload artifact to GitHub Releases
+          command: |
+            gh release create v1.0.0 artifacts/myapp.tar.gz
 
 workflows:
   workflow-testing:
