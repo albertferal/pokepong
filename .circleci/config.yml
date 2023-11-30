@@ -51,9 +51,9 @@ jobs:
           command: |
             TAG="v1.0.0"  # Cambia esta etiqueta según tu versión
             FILE_TO_UPLOAD="artifacts/myapp.zip"
-            UPLOAD_URL=$(curl -s -X POST -H "Authorization: token $TokenGH" "https://api.github.com/repos/albertferal/pokepong/releases" | jq -r '.upload_url')
+            UPLOAD_URL=$(curl -s -X POST -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/albertferal/pokepong/releases" | jq -r '.upload_url')
             UPLOAD_URL="${UPLOAD_URL%\{*}?name=$(basename $FILE_TO_UPLOAD)"
-            curl -s -X POST -H "Authorization: token $TokenGH" -H "Content-Type: application/zip" --data-binary @$FILE_TO_UPLOAD "$UPLOAD_URL"
+            curl -s -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Content-Type: application/zip" --data-binary @$FILE_TO_UPLOAD "$UPLOAD_URL"
 
 workflows:
   workflow-testing:
