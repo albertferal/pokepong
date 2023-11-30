@@ -36,11 +36,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build and push Docker image
+          name: Package artifact
           command: |
-            docker build -t feralbert90/pokepong1:latest .
-            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
-            docker push feralbert90/pokepong1:latest
+            mkdir -p artifacts
+            zip -r artifacts/myapp.zip Game/*
 
 
 workflows:
@@ -49,7 +48,6 @@ workflows:
       - job-tests:
           context: SonarCloud
       - job-deployment:
-          context: DockerHub
           requires:
             - job-tests
           filters:
