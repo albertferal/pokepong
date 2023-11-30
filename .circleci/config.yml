@@ -48,6 +48,6 @@ workflows:
     jobs:
       - job-tests:
           context: SonarCloud
-      - job-artifacts
+      - job-artifact
       # Agrega un trabajo para desplegar en Kubernetes usando ArgoCD
       # Este trabajo solo se ejecutará en la rama master/main
