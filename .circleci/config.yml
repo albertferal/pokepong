@@ -58,4 +58,4 @@ workflows:
             branches:
               only: main
       # Agrega un trabajo para desplegar en Kubernetes usando ArgoCD
-      # Este trabajo solo se ejecutará en la rama master/main
+      # Este trabajo solo se ejecutará en la rama master/mainn
