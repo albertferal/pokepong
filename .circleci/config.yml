@@ -32,37 +32,14 @@ jobs:
       - sonarcloud/scan
 
   job-deploy:
-    docker:
-      - image: feralbert90/pokepong1:latest
+    executor: pythonpygame
     steps:
       - checkout
-
-       # Install Docker
       - run:
-          name: Install Docker
+          name: Package artifact
           command: |
-            apt-get update
-            apt-get install -y apt-transport-https ca-certificates curl software-properties-common
-            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-            add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-            apt-get update
-            apt-get install -y docker-ce
-
-      - run:
-          name: Save Dockerfile as artifact
-          command: |
-                    mkdir -p artifacts
-                    cp Game/Dockerfile artifacts/
-      - run: 
-          name: Build and tag Docker image
-          command: |
-                    docker build -t feralbert90/pokepong_artif:latest -f artifacts/Dockerfile .
-      - run:
-          name: Publish Docker image to Docker Hub
-          command: |
-                    echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-                    docker push feralbert90/pokepong_artif:latest
-
+            mkdir -p artifacts
+            tar -czvf artifacts/myapp.tar.gz Game/*
 
 workflows:
   workflow-testing:
@@ -70,8 +47,10 @@ workflows:
       - job-tests:
           context: SonarCloud
       - job-deploy:
-          context: DockerHub
-          requires:
+          requires: 
             - job-tests
+          filters:
+            branches:
+              only: master
       # Agrega un trabajo para desplegar en Kubernetes usando ArgoCD
       # Este trabajo solo se ejecutará en la rama master/main
