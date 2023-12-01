@@ -46,7 +46,7 @@ jobs:
           name: Package artifact
           command: |
             cd Game
-            zip -r ../artifacts/myapp.zip * --exclude=".circleci/*"
+            zip -r ../artifacts/myapp.zip . -x ".circleci/*" -x "*.git*"
       - run:
           name: Set Git Identity
           command: |
