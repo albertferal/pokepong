@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
+  ggshield: gitguardian/ggshield@1.1.4
 
 executors:
   pythonpygame:
@@ -31,10 +32,17 @@ jobs:
           path: Game/tests/test-results.xml
       - sonarcloud/scan
 
+  #job-vulnerability:
+  #  executor: pythonpygame
+  #  steps:
+  #    - run:
+  #       name: Analize with GitGuardian
+  #       command: |
+  #          gitguardian scan --verbose
+
   job-deployment:
     executor: pythonpygame
     steps:
-      - checkout
       - run:
           name: Install zip
           command: |
