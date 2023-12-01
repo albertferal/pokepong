@@ -45,17 +45,17 @@ jobs:
             mkdir -p artifacts
             zip -r artifacts/myapp.zip Game/*
       - run:
-          name: Publish to GitHub
+          name: Set Git Identity
           command: |
-            git remote set-url origin https://github.com/albertferal/artifact-circleci.git
-            git config credential.helper 'store --file=.git/credentials'
             git config user.email "albertferal@gmail.com"
             git config user.name "albertferal"
-            echo "https://$GITHUB_TOKEN:x-oauth-basic@github.com" > ~/.git-credentials
+      - run:
+          name: Publish to GitHub
+          command: |
+            git remote set-url origin https://$GITHUB_TOKEN@github.com/albertferal/artifact-circleci.git
             git add artifacts/myapp.zip
             git commit -m "Agregar artefacto myapp.zip"
             git push origin main
-
 
 workflows:
   workflow-testing:
