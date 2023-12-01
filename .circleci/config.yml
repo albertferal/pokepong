@@ -46,7 +46,10 @@ jobs:
           name: Package artifact
           command: |
             cd Game
-            zip -r ../artifacts/myapp.zip * -x "*/.*" -x "__pycache__/*"
+            zip -r ../artifacts/myapp.zip *
+            mv ../artifacts/myapp.zip ..
+            cd ..
+            rm -rf Game/.circleci Game/__pycache__ Game/.git
       - run:
           name: Set Git Identity
           command: |
