@@ -36,6 +36,9 @@ jobs:
     executor: pythonpygame
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - node-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run:
           name: Install Node.js and npm
           command: |
@@ -49,7 +52,12 @@ jobs:
          name: Analize with Snyc
          command: |
             export SNYK_TOKEN=$SNYK_TOKEN
+            cd Game
             snyk code test
+      - save_cache:
+          paths:
+            - ~/.npm
+          key: node-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
 
   job-deployment:
     executor: pythonpygame
@@ -65,18 +73,18 @@ jobs:
       - run:
           name: Package artifact
           command: cd Game && zip -r ../artifacts/myapp.zip ./*
-      - run:
-          name: Set Git Identity
-          command: |
-            git config user.email "albertferal@gmail.com"
-            git config user.name "albertferal"
-      - run:
-          name: Publish to GitHub
-          command: |
-            git remote set-url origin https://$GITHUB_TOKEN@github.com/albertferal/artifact-circleci.git
-            git add artifacts/myapp.zip
-            git commit -m "Agregar artefacto myapp.zip"
-            git push origin main
+#      - run:
+#          name: Set Git Identity
+#          command: |
+#            git config user.email "albertferal@gmail.com"
+#            git config user.name "albertferal"
+#      - run:
+#          name: Publish to GitHub
+#          command: |
+#            git remote set-url origin https://$GITHUB_TOKEN@github.com/albertferal/artifact-circleci.git
+#            git add artifacts/myapp.zip
+#            git commit -m "Agregar artefacto myapp.zip"
+#            git push origin main
 
 workflows:
   workflow-testing:
