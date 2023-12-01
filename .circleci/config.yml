@@ -74,10 +74,12 @@ workflows:
     jobs:
       - job-tests:
           context: SonarCloud
-      - job-vulnerability
-      - job-deployment:
+      - job-vulnerability:
           requires:
             - job-tests
+      - job-deployment:
+          requires:
+            - job-vulnerability
           filters:
             branches:
               only: main
