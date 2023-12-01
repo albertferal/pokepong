@@ -51,7 +51,10 @@ jobs:
             git config user.name "albertferal"
       - run:
           name: Fetch changes
-          command: git pull origin main
+          command: git fetch origin main  # Fetch changes from the remote main branch
+      - run:
+          name: Merge changes
+          command: git merge origin/main  # Merge changes from remote main into local main
       - run:
           name: Publish to GitHub
           command: |
