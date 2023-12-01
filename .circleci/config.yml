@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
-  snyk: snyk/snyk@2.0.2
 
 executors:
   pythonpygame:
@@ -35,10 +34,10 @@ jobs:
   job-vulnerability:
     executor: pythonpygame
     steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - node-deps-{{ .Branch }}-{{ checksum "npm-shrinkwrap.json" }}
+#      - checkout
+#      - restore_cache:
+#          keys:
+#            - node-deps-{{ .Branch }}-{{ checksum "npm-shrinkwrap.json" }}
       - run:
           name: Install Node.js and npm
           command: |
@@ -54,10 +53,10 @@ jobs:
             export SNYK_TOKEN=$SNYK_TOKEN
             cd Game
             snyk code test
-      - save_cache:
-          paths:
-            - ~/.npm
-          key: node-deps-{{ .Branch }}-{{ checksum "npm-shrinkwrap.json" }}
+#      - save_cache:
+#          paths:
+#            - ~/.npm
+#          key: node-deps-{{ .Branch }}-{{ checksum "npm-shrinkwrap.json" }}
 
   job-deployment:
     executor: pythonpygame
