@@ -38,7 +38,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - node-deps-{{ .Branch }}-{{ checksum "npm-shrinkwrap.json" }}
       - run:
           name: Install Node.js and npm
           command: |
@@ -57,7 +57,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.npm
-          key: node-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          key: node-deps-{{ .Branch }}-{{ checksum "npm-shrinkwrap.json" }}
 
   job-deployment:
     executor: pythonpygame
