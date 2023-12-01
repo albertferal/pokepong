@@ -39,8 +39,9 @@ jobs:
       - run:
          name: Analize with Snyc
          command: |
+            export SNYK_TOKEN=$SNYK_TOKEN
             cd Game
-            snyk
+            snyk/scan
 
   job-deployment:
     executor: pythonpygame
