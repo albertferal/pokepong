@@ -50,7 +50,7 @@ jobs:
          command: |
             export SNYK_TOKEN=$SNYK_TOKEN
             cd Game
-            snyk/scan
+            snyk test
 
   job-deployment:
     executor: pythonpygame
