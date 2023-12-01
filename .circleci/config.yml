@@ -45,19 +45,19 @@ jobs:
             mkdir -p artifacts
             zip -r artifacts/myapp.zip Game/*
       - run:
-          name: Set Git Identity
+          name: Update local branch
           command: |
-            git config user.email "albertferal@gmail.com"
-            git config user.name "albertferal"
+            git remote set-url origin git@github.com:albertferal/artifact-circleci.git
+            git fetch origin main
+            git checkout main
+            git pull origin main  # Asegurarse de que la rama local está actualizada con la remota
+            git rebase origin/main  # Rebase de la rama local con la remota
       - run:
           name: Publish to GitHub
           command: |
-            git remote set-url origin https://${GITHUB_TOKEN}@github.com/albertferal/artifact-circleci.git
-            git pull origin main--rebase
             git add artifacts/myapp.zip
             git commit -m "Agregar artefacto myapp.zip"
             git push origin main
-
 workflows:
   workflow-testing:
     jobs:
