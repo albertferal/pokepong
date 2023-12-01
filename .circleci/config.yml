@@ -52,7 +52,7 @@ jobs:
       - run:
           name: Publish to GitHub
           command: |
-            git remote set-url origin git@github.com:albertferal/artifact-circleci.git
+            git remote set-url origin https://${GITHUB_TOKEN}@github.com/albertferal/artifact-circleci.git
             git add artifacts/myapp.zip
             git commit -m "Agregar artefacto myapp.zip"
             git push origin main
