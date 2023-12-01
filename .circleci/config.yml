@@ -52,8 +52,7 @@ jobs:
       - run:
           name: Publish to GitHub
           command: |
-            git clone https://github.com/albertferal/artifact-circleci.git
-            cd artifact-circleci
+            git remote set-url origin https://github.com/albertferal/artifact-circleci.git
             git add artifacts/myapp.zip
             git commit -m "Agregar artefacto myapp.zip"
             git push origin main
