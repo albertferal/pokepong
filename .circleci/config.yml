@@ -44,7 +44,7 @@ jobs:
           command: mkdir -p artifacts
       - run:
           name: Package artifact
-          command: cd Game && zip -r ../artifacts/myapp.zip ./*
+          command: cd Game && zip -r ../artifacts/myapp.zip *
       - run:
           name: Set Git Identity
           command: |
