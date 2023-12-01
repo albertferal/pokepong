@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
+  snyk: snyk/snyk@2.0.2
 
 executors:
   pythonpygame:
