@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
-  ggshield: gitguardian/ggshield@1.1.4
+  snyk: snyk/snyk@2.0.2
 
 executors:
   pythonpygame:
@@ -35,10 +35,12 @@ jobs:
   job-vulnerability:
     executor: pythonpygame
     steps:
+      - checkout
       - run:
-         name: Analize with GitGuardian
+         name: Analize with Snyc
          command: |
-            gitguardian scan --verbose
+            cd Game
+            snyc/scan
 
   job-deployment:
     executor: pythonpygame
