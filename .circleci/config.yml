@@ -32,13 +32,13 @@ jobs:
           path: Game/tests/test-results.xml
       - sonarcloud/scan
 
-  #job-vulnerability:
-  #  executor: pythonpygame
-  #  steps:
-  #    - run:
-  #       name: Analize with GitGuardian
-  #       command: |
-  #          gitguardian scan --verbose
+  job-vulnerability:
+    executor: pythonpygame
+    steps:
+      - run:
+         name: Analize with GitGuardian
+         command: |
+            gitguardian scan --verbose
 
   job-deployment:
     executor: pythonpygame
@@ -72,6 +72,7 @@ workflows:
     jobs:
       - job-tests:
           context: SonarCloud
+      - job-vulnerability
       - job-deployment:
           requires:
             - job-tests
