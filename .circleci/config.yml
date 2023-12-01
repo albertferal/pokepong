@@ -37,6 +37,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Snyk
+          command: |
+            npm install -g snyk
+      - run:
          name: Analize with Snyc
          command: |
             export SNYK_TOKEN=$SNYK_TOKEN
