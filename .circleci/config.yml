@@ -37,9 +37,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Snyk
+          name: Install Snyk CLI locally
           command: |
-            npm install -g snyk
+              curl -o ./snyk https://downloads.snyk.io/cli/vX.Y.Z/snyk-linux
+              chmod +x ./snyk
+              ./snyk auth $SNYK_TOKEN
       - run:
          name: Analize with Snyc
          command: |
