@@ -43,6 +43,7 @@ jobs:
   job-deployment:
     executor: pythonpygame
     steps:
+      - checkout
       - run:
           name: Install zip
           command: |
