@@ -52,7 +52,14 @@ jobs:
          command: |
             export SNYK_TOKEN=$SNYK_TOKEN
             cd Game
-            snyk code test
+            snyk_output=$(snyk code test)
+            echo "$snyk_output"
+            if echo "$snyk_output" | grep -q 'High severity vulnerabilities found'; then
+              echo "Detected high severity vulnerabilities. Failing the build."
+              exit 1
+            else
+              echo "No high severity vulnerabilities found."
+            fi
 #      - save_cache:
 #          paths:
 #            - ~/.npm
