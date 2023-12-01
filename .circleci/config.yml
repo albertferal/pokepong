@@ -37,11 +37,14 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Snyk CLI locally
+          name: Install Node.js and npm
           command: |
-              curl -o ./snyk https://downloads.snyk.io/cli/vX.Y.Z/snyk-linux
-              chmod +x ./snyk
-              ./snyk auth $SNYK_TOKEN
+            sudo apt-get update
+            sudo apt-get install -y nodejs npm
+      - run:
+          name: Install Snyk
+          command: |
+            npm install -g snyk
       - run:
          name: Analize with Snyc
          command: |
