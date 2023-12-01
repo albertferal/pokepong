@@ -49,7 +49,6 @@ jobs:
          name: Analize with Snyc
          command: |
             export SNYK_TOKEN=$SNYK_TOKEN
-            cd Game
             snyk test
 
   job-deployment:
