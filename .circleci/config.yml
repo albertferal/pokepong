@@ -50,11 +50,9 @@ jobs:
             git config user.email "albertferal@gmail.com"
             git config user.name "albertferal"
       - run:
-          name: Fetch changes
-          command: git fetch origin main  # Fetch changes from the remote main branch
-      - run:
-          name: Merge changes
-          command: git merge origin/main  # Merge changes from remote main into local main
+          name: Fetch changes and rebase
+          command: |
+            git fetch origin main --rebase
       - run:
           name: Publish to GitHub
           command: |
