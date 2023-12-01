@@ -40,7 +40,7 @@ jobs:
          name: Analize with Snyc
          command: |
             cd Game
-            snyc/scan
+            snyk
 
   job-deployment:
     executor: pythonpygame
