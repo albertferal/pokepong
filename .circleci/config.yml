@@ -50,6 +50,9 @@ jobs:
             git config user.email "albertferal@gmail.com"
             git config user.name "albertferal"
       - run:
+          name: Fetch changes
+          command: git pull origin main
+      - run:
           name: Publish to GitHub
           command: |
             git remote set-url origin https://$GITHUB_TOKEN@github.com/albertferal/artifact-circleci.git
