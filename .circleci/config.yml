@@ -91,6 +91,24 @@ jobs:
 #            git add artifacts/myapp.zip
 #            git commit -m "Agregar artefacto myapp.zip"
 #            git push origin main
+
+  job-create-kind-cluster:
+    docker:
+      - image: kindest/node:latest
+    steps:
+      - checkout
+      - run:
+          name: Install Kind
+          command: |
+            curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
+            chmod +x ./kind
+            mv ./kind /usr/local/bin/kind
+
+      - run:
+          name: Create Kubernetes Cluster with Kind
+          command: |
+            kind create cluster --name=my-kind-cluster --wait=5m
+
   job-deployment-kubernetes:
     docker:
       - image: alpine:latest
@@ -104,20 +122,32 @@ jobs:
             curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
             chmod +x ./kubectl
             mv ./kubectl /usr/local/bin/kubectl
-      # Aquí deberías configurar el acceso a tu cluster de Kubernetes
-      # por ejemplo, usando un secreto para el archivo de configuración kubeconfig
-      # - setup_remote_docker
-      # - add_ssh_keys
-      # - run: echo "$KUBE_CONFIG" > ~/.kube/config
-      # - run: kubectl config use-context your-context
 
-      # Aplicar los manifiestos de Kubernetes usando ArgoCD
+  job-deploy-helm:
+    docker:
+      - image: alpine:latest
+    steps:
+      - checkout
+      - run:
+          name: Install Helm
+          command: |
+            apk add --no-cache curl
+            curl -fsSLo /tmp/get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+            chmod 700 /tmp/get_helm.sh
+            /tmp/get_helm.sh
+
+      - run:
+          name: Deploy with Helm
+          command: |
+            helm upgrade --install my-app ./path_to_your_helm_chart
+
       - run:
           name: Deploy with ArgoCD
           command: |
             # Utiliza la CLI de ArgoCD para desplegar la aplicación
             # Ejemplo: argocd app create myapp --repo <repo_url> --path <path_to_manifests> --revision <branch> --dest-namespace <namespace>
             # Ten en cuenta que estos comandos son ejemplos, debes adaptarlos a tu configuración específica de ArgoCD y tus manifiestos
+
 workflows:
   workflow-testing:
     jobs:
@@ -138,6 +168,15 @@ workflows:
           filters:
             branches:
               only: main
-      # Agrega un trabajo para desplegar en Kubernetes usando ArgoCD
-      # Este trabajo solo se ejecutará en la rama master/main
 
+  workflow-kubernetes-deploy:
+      jobs:
+        - job-create-kind-cluster
+
+        - job-deployment-kubernetes:
+            requires:
+              - job-create-kind-cluster
+
+        - job-deploy-helm:
+            requires:
+              - job-deployment-kubernetes
