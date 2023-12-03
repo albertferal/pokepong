@@ -6,7 +6,7 @@ orbs:
 executors:
   pythonpygame:
     docker:
-      - image: feralbert90/pokepong1:latest  # Dockerfile que la app
+      - image: feralbert90/pokepong1:latest  # Dockerfile que se necesita de dockerhub
 
 jobs:
   job-tests:
@@ -91,33 +91,6 @@ jobs:
 #            git add artifacts/myapp.zip
 #            git commit -m "Agregar artefacto myapp.zip"
 #            git push origin main
-  job-deployment-kubernetes:
-    docker:
-      - image: alpine:latest
-    steps:
-      - checkout
-      # Instalar y configurar la CLI de kubectl
-      - run:
-          name: Install kubectl
-          command: |
-            apk add --no-cache curl
-            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-            chmod +x ./kubectl
-            mv ./kubectl /usr/local/bin/kubectl
-      # Aquí deberías configurar el acceso a tu cluster de Kubernetes
-      # por ejemplo, usando un secreto para el archivo de configuración kubeconfig
-      # - setup_remote_docker
-      # - add_ssh_keys
-      # - run: echo "$KUBE_CONFIG" > ~/.kube/config
-      # - run: kubectl config use-context your-context
-
-      # Aplicar los manifiestos de Kubernetes usando ArgoCD
-      - run:
-          name: Deploy with ArgoCD
-          command: |
-# Utiliza la CLI de ArgoCD para desplegar la aplicación
-# Ejemplo: argocd app create myapp --repo <repo_url> --path <path_to_manifests> --revision <branch> --dest-namespace <namespace>
-# Ten en cuenta que estos comandos son ejemplos, debes adaptarlos a tu configuración específica de ArgoCD y tus manifiestos
 
 workflows:
   workflow-testing:
@@ -132,10 +105,7 @@ workflows:
             - job-vulnerability
           filters:
             branches:
-              only: mainç
-      - job-deployment-kubernetes:
-          requires:
-            - job-deployment
-          filters:
-            branches:
               only: main
+      # Agrega un trabajo para desplegar en Kubernetes usando ArgoCD
+      # Este trabajo solo se ejecutará en la rama master/mainn
+
