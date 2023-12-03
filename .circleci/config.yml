@@ -162,21 +162,16 @@ workflows:
           filters:
             branches:
               only: main
-      - job-deployment-kubernetes:
+
+  workflow-kubernetes-deploy:
+    jobs:
+      - job-create-kind-cluster
+      - job-deployment-kubernetes: # Este trabajo está solo en el segundo flujo de trabajo
           requires:
-            - job-deployment
+            - job-create-kind-cluster
           filters:
             branches:
               only: main
-
-  workflow-kubernetes-deploy:
-      jobs:
-        - job-create-kind-cluster
-
-        - job-deployment-kubernetes:
-            requires:
-              - job-create-kind-cluster
-
-        - job-deploy-helm:
-            requires:
-              - job-deployment-kubernetes
+      - job-deploy-helm:
+          requires:
+            - job-deployment-kubernetes
