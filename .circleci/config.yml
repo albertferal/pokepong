@@ -99,6 +99,12 @@ jobs:
     steps:
       - checkout
       # Instalación de Minikube y kubectl en el job
+      
+      - run:
+          name: Install Minikube
+          command: |
+            curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+            
       - run:
           name: Install Minikube and kubectl
           command: |
