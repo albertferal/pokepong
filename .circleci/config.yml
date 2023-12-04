@@ -121,7 +121,13 @@ jobs:
             echo "$KUBECONFIG_FILE_CONTENTS" > kubeconfig.yaml
             mkdir -p ~/.kube
             mv kubeconfig.yaml ~/.kube/config
-
+       # Despliegue en ArgoCDD
+      #- run:
+      #    name: Desplegar en ArgoCD
+      #    command: |
+      #      argocd login <ARGOCD_SERVER> --username=<USERNAME> --password=<PASSWORD> --insecure
+      #      argocd app create <APP_NAME> --repo=<REPO_URL> --path=<APP_PATH> --dest-server=<DEST_SERVER> --dest-namespace=<NAMESPACE>
+      #      argocd app sync <APP_NAME>
     
 workflows:
   workflow-testing:
