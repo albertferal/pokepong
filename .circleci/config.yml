@@ -92,6 +92,46 @@ jobs:
 #            git commit -m "Agregar artefacto myapp.zip"
 #            git push origin main
 
+
+  job-deploy-to-kubernetes:
+    docker:
+      - image: alpine:latest  # Puedes usar una imagen que contenga las herramientas que necesitas
+    steps:
+      - checkout
+      # Instalación de Minikube y kubectl en el job
+      - run:
+          name: Install Minikube and kubectl
+          command: |
+            apk add --update curl
+            curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+            install minikube-linux-amd64 /usr/local/bin/minikube
+            rm minikube-linux-amd64
+
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mv ./kubectl /usr/local/bin/kubectl
+      # Configuración de Minikube y kubectl
+      - run:
+          name: Configure Minikube and kubectl
+          command: |
+            minikube start
+            kubectl config use-context minikube
+
+      # Instalación de ArgoCD en el clúster de Minikube usando Helm
+      - run:
+          name: Install ArgoCD
+          command: |
+            kubectl create namespace argocd
+            kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+            kubectl port-forward svc/argocd-server -n argocd 8080:443 &
+
+      # Despliegue de la aplicación usando ArgoCD (ejemplo ilustrativo)
+      - run:
+          name: Deploy app using ArgoCD
+          command: |
+            # Aquí deberías tener comandos para desplegar la aplicación con ArgoCD
+            # Puedes usar comandos como `kubectl apply -f myapp.yaml`
+            # O invocar la API de ArgoCD para desplegar la aplicación
 workflows:
   workflow-testing:
     jobs:
@@ -103,6 +143,12 @@ workflows:
       - job-create-deploy-artifact:
           requires:
             - job-vulnerability
+          filters:
+            branches:
+              only: main
+      - job-deploy-to-kubernetes:
+          requires:
+            - job-create-deploy-artifact
           filters:
             branches:
               only: main
