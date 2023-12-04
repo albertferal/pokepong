@@ -92,6 +92,22 @@ jobs:
 #            git commit -m "Agregar artefacto myapp.zip"
 #            git push origin main
 
+  job-k8s:
+    docker:
+      - image: circleci/kubernetes:1.1.3  # Una imagen que ya contiene kubectl
+    steps:
+      - run:
+          name: Install kubectl
+          command: |
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            chmod +x kubectl
+            sudo mv kubectl /usr/local/bin/
+
+      - run:
+          name: Install argocd
+          command: |
+            curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+            chmod +x /usr/local/bin/argocd
 workflows:
   workflow-testing:
     jobs:
@@ -106,3 +122,4 @@ workflows:
           filters:
             branches:
               only: main
+      - job-k8s
