@@ -144,7 +144,6 @@ workflows:
   workflow-k8s:
     jobs:
       - job-deploy-argocd:
-          requites: job-deploy-artifact
           filters:
             branches:
               only: main
