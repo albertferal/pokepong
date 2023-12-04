@@ -120,7 +120,7 @@ jobs:
             mkdir -p ~/.kube
             mv kubeconfig.yaml ~/.kube/config
 
-      # Despliegue en ArgoCD
+      # Despliegue en ArgoCDD
       - run:
           name: Desplegar en ArgoCD
           command: |
