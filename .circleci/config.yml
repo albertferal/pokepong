@@ -59,19 +59,39 @@ jobs:
             fi
 
   job-create-deploy-artifact:
-    executor: pythonpygame
+    runs-on: ubuntu-latest
     steps:
-      - checkout
-      - run:
-          name: Install zip
-          command: |
-            apt-get update && apt-get install -y zip
-      - run:
-          name: Create artifacts directory
-          command: mkdir -p artifacts
-      - run:
-          name: Package artifact
-          command: cd Game && zip -r ../artifacts/myapp.zip ./*
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install zip
+        run: |
+          sudo apt-get update && sudo apt-get install -y zip
+
+      - name: Create artifacts directory
+        run: mkdir -p artifacts
+
+      - name: Package artifact
+        run: cd Game && zip -r ../artifacts/myapp.zip ./*
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: myapp
+          path: artifacts
+#    executor: pythonpygame
+#    steps:
+#      - checkout
+#      - run:
+#          name: Install zip
+#          command: |
+#           apt-get update && apt-get install -y zip
+#      - run:
+#          name: Create artifacts directory
+#          command: mkdir -p artifacts
+#      - run:
+#          name: Package artifact
+#          command: cd Game && zip -r ../artifacts/myapp.zip ./*
 #      - run:
 #          name: Set Git Identity
 #          command: |
@@ -84,10 +104,7 @@ jobs:
 #            git add artifacts/myapp.zip
 #            git commit -m "Agregar artefacto myapp.zip"
 #            git push origin main
-      - run:
-          name: Upload artifact to GitHub Packages
-          command: |
-            curl -u albertferal:$GITHUB_TOKEN -X PUT -H "Content-Type:application/zip" --data-binary @artifacts/myapp.zip "https://github.com/albertferal/mi-repo/releases/latest/download/myapp.zip"
+
     
 workflows:
   workflow-testing:
