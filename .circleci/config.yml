@@ -14,7 +14,6 @@ jobs:
     executor: pythonpygame
     steps:
       - checkout  # Para obtener el código del repositorio
-      # Aquí agregamos los pasos para ejecutar tests, linting, análisis estático, etc.
       - run:
           name: Run tests
           command: | 
@@ -36,9 +35,6 @@ jobs:
     executor: pythonpygame
     steps:
       - checkout
-#      - restore_cache:
-#          keys:
-#            - node-deps-{{ .Branch }}-{{ checksum "npm-shrinkwrap.json" }}
       - run:
           name: Install Node.js and npm
           command: |
@@ -61,10 +57,6 @@ jobs:
             else
               echo "No high severity vulnerabilities found."
             fi
-#      - save_cache:
-#          paths:
-#            - ~/.npm
-#          key: node-deps-{{ .Branch }}-{{ checksum "npm-shrinkwrap.json" }}
 
   job-create-deploy-artifact:
     executor: pythonpygame
@@ -92,7 +84,10 @@ jobs:
 #            git add artifacts/myapp.zip
 #            git commit -m "Agregar artefacto myapp.zip"
 #            git push origin main
-
+      - run:
+          name: Upload artifact to GitHub Packages
+          command: |
+            curl -u albertferal:$GITHUB_TOKEN -X PUT -H "Content-Type:application/zip" --data-binary @artifacts/myapp.zip "https://npm.pkg.github.com/@usuario/mi-paquete/myapp.zip"
     
 workflows:
   workflow-testing:
