@@ -59,45 +59,31 @@ jobs:
             fi
 
   job-create-deploy-artifact:
-    runs-on: ubuntu-latest
+    executor: pythonpygame
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install zip
-        run: |
-          sudo apt-get update && sudo apt-get install -y zip
-
-      - name: Create artifacts directory
-        run: mkdir -p artifacts
-
-      - name: Package artifact
-        run: cd Game && zip -r ../artifacts/myapp.zip ./*
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: myapp
-          path: artifacts
-#    executor: pythonpygame
-#    steps:
-#      - checkout
-#      - run:
-#          name: Install zip
-#          command: |
-#           apt-get update && apt-get install -y zip
-#      - run:
-#          name: Create artifacts directory
-#          command: mkdir -p artifacts
-#      - run:
-#          name: Package artifact
-#          command: cd Game && zip -r ../artifacts/myapp.zip ./*
-#      - run:
-#          name: Set Git Identity
-#          command: |
-#            git config user.email "albertferal@gmail.com"
-#            git config user.name "albertferal"
-#      - run:
+      - checkout
+      - run:
+          name: Install zip
+          command: |
+            apt-get update && apt-get install -y zip
+      - run:
+          name: Create artifacts directory
+          command: mkdir -p artifacts
+      - run:
+          name: Package artifact
+          command: cd Game && zip -r ../artifacts/myapp.zip ./*
+      - run:
+          name: Set Git Identity
+          command: |
+            git config user.email "albertferal@gmail.com"
+            git config user.name "albertferal"
+      - run:
+          name: Publish to GitHub Packages
+          command: |
+            echo "//npm.pkg.github.com/:_authToken=${GH_TOKEN}" > ~/.npmrc
+            echo "@albertferal:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+            npm publish --access public artifacts/myapp.zip
+  #      - run:
 #          name: Publish to GitHub
 #          command: |
 #            git remote set-url origin https://$GITHUB_TOKEN@github.com/albertferal/artifact-circleci.git
