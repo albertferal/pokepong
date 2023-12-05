@@ -87,7 +87,7 @@ jobs:
       - run:
           name: Upload artifact to GitHub Packages
           command: |
-            curl -u albertferal:$GITHUB_TOKEN -X PUT -H "Content-Type:application/zip" --data-binary @artifacts/myapp.zip "https://npm.pkg.github.com/@usuario/mi-paquete/myapp.zip"
+            curl -u albertferal/mypackage:$GITHUB_TOKEN -X PUT -H "Content-Type:application/zip" --data-binary @artifacts/myapp.zip "https://npm.pkg.github.com/@usuario/mi-paquete/myapp.zip"
     
 workflows:
   workflow-testing:
