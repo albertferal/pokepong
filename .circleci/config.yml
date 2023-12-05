@@ -123,7 +123,7 @@ jobs:
             mv kubeconfig.yaml ~/.kube/config
        # Despliegue en ArgoCDD
       #- run:
-      #    name: Desplegar en ArgoCD
+      #    name: Desplegar en ArgoCDd
       #    command: |
       #      argocd login <ARGOCD_SERVER> --username=<USERNAME> --password=<PASSWORD> --insecure
       #      argocd app create <APP_NAME> --repo=<REPO_URL> --path=<APP_PATH> --dest-server=<DEST_SERVER> --dest-namespace=<NAMESPACE>
