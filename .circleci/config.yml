@@ -80,7 +80,7 @@ jobs:
       - run:
           name: Publish to GitHub Packages
           command: |
-            echo "//npm.pkg.github.com/:_authToken=${GH_TOKEN}" > ~/.npmrc
+            echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/.npmrc
             echo "@albertferal:registry=https://npm.pkg.github.com/" >> ~/.npmrc
             npm publish --access public artifacts/myapp.zip
   #      - run:
