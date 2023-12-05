@@ -77,14 +77,26 @@ jobs:
           command: |
             git config user.email "albertferal@gmail.com"
             git config user.name "albertferal"
-
       - run:
-          name: Publish to GitHub
+          name: Publish to GitHub Packages
           command: |
-            git remote set-url origin https://$GITHUB_TOKEN@github.com/albertferal/artifact-circleci.git
-            git add artifacts/myapp.zip
-            git commit -m "Agregar artefacto myapp.zip"
-            git push origin main
+            FILE_PATH="artifacts/myapp.zip"
+            TOKEN="$GITHUB_TOKEN"
+            REPOSITORY_OWNER="albertferal"
+            REPOSITORY_NAME="artifact-circleci"
+            PACKAGE_NAME="myapp.zip"
+
+            curl -X POST -H "Authorization: token $TOKEN" \
+              -H "Content-Type: application/zip" \
+              --data-binary @"$FILE_PATH" \
+              "https://npm.pkg.github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/$PACKAGE_NAME"
+  #      - run:
+#          name: Publish to GitHub
+#          command: |
+#            git remote set-url origin https://$GITHUB_TOKEN@github.com/albertferal/artifact-circleci.git
+#            git add artifacts/myapp.zip
+#            git commit -m "Agregar artefacto myapp.zip"
+#            git push origin main
 
     
 workflows:
