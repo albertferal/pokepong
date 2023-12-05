@@ -80,9 +80,16 @@ jobs:
       - run:
           name: Publish to GitHub Packages
           command: |
-            echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/.npmrc
-            echo "@albertferal:registry=https://npm.pkg.github.com/" >> ~/.npmrc
-            npm publish --access public artifacts/myapp.zip
+            FILE_PATH="artifacts/myapp.zip"
+            TOKEN="$GITHUB_TOKEN"
+            REPOSITORY_OWNER="albertferal"
+            REPOSITORY_NAME="artifact-pong"
+            PACKAGE_NAME="myapp.zip"
+
+            curl -X POST -H "Authorization: token $TOKEN" \
+              -H "Content-Type: application/zip" \
+              --data-binary @"$FILE_PATH" \
+              "https://npm.pkg.github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/$PACKAGE_NAME"
   #      - run:
 #          name: Publish to GitHub
 #          command: |
