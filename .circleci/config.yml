@@ -83,7 +83,7 @@ jobs:
             FILE_PATH="artifacts/myapp.zip"
             TOKEN="$GITHUB_TOKEN"
             REPOSITORY_OWNER="albertferal"
-            REPOSITORY_NAME="artifact-pong"
+            REPOSITORY_NAME="artifact-try"
             PACKAGE_NAME="myapp.zip"
 
             curl -X POST -H "Authorization: token $TOKEN" \
