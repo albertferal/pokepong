@@ -43,7 +43,8 @@
 ## k8s: 
 - En este directorio tenemos los manifiestos yml para el despliegue de la app en Kubernetes. >> [Manifiestos aquí](k8s)
     - Consta de 3 sencillos archivos yml para poder lanzar la app a un cluster de Kubernetes.
-    - Lo desplegamos en ArgoCD:
+    - Lo desplegamos en ArgoCD siguiendo la [documentación oficial](https://argo-cd.readthedocs.io/en/stable/cli_installation/).
+    - Una vez dentro de la interfaz de ArgoCD, podemos hacer el despliegue manualmente o a través de un archivo .yml >> [ArgoCD yml aquí](k8s\argocd\pong-app.yml)
 
     ![Pipeline](Screenshots/argocd.jpg)
 
