@@ -10,9 +10,9 @@
     -  Construye la app y ejecuta los tests necesarios (pytest, linting y code coverage).
     -  Se sincroniza con SonarCloud para hacer un analisis del código completo, para ello usamos su Orb.
 
-    ![SonarCloud](Screenshots\sonarcloud1.jpg)
+    ![SonarCloud](Screenshots/sonarcloud1.jpg)
     
-    ![SonarCloud](Screenshots\sonarcloud2.jpg)
+    ![SonarCloud](Screenshots/sonarcloud2.jpg)
     
     -  Se sincroniza con Snyk para hacer un analisis de vulnerabilidades del código.
     
