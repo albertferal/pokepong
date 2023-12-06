@@ -73,17 +73,17 @@ jobs:
           name: Package artifact
           command: cd Game && zip -r ../artifacts/myapp.zip ./*
       - run:
-          name: Set Git Identity
-          command: |
-            git config user.email "albertferal@gmail.com"
-            git config user.name "albertferal"
-      - run:
           name: Install GitHub CLI
           command: |
             curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
             echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
             apt-get update
             apt-get install gh -y
+      - run:
+          name: Set Git Identity
+          command: |
+            git config user.email "albertferal@gmail.com"
+            git config user.name "albertferal"
       - run:
           name: Publish to GitHub Packages
           command: |
