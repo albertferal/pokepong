@@ -83,7 +83,7 @@ jobs:
             git remote set-url origin https://$GITHUB_TOKEN@github.com/albertferal/artifact-pong.git
             git add artifacts/myapp.zip
             git commit -m "Agregar artefacto myapp.zip"
-            git push origin mainn
+            git push origin main
 
     
 workflows:
