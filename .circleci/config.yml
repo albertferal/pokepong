@@ -86,10 +86,7 @@ jobs:
             REPOSITORY_NAME="artifact-circleci"
             PACKAGE_NAME="myapp.zip"
 
-            curl -X POST -H "Authorization: token $TOKEN" \
-              -H "Content-Type: application/zip" \
-              --data-binary @"$FILE_PATH" \
-              "https://npm.pkg.github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/$PACKAGE_NAME"
+            gh pkg publish artifacts/myapp.zip -r REPOSITORY_NAME
   #      - run:
 #          name: Publish to GitHub
 #          command: |
