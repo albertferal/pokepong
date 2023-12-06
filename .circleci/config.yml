@@ -94,7 +94,7 @@ jobs:
             PACKAGE_NAME="myapp.zip"
 
             gh release create $RELEASE_TAG $FILE_PATH --repo $REPOSITORY_OWNER/$REPOSITORY_NAME
-  #      - run:
+#      - run:
 #          name: Publish to GitHub
 #          command: |
 #            git remote set-url origin https://$GITHUB_TOKEN@github.com/albertferal/artifact-circleci.git
