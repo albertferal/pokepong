@@ -93,7 +93,7 @@ jobs:
             REPOSITORY_NAME="artifact-circleci"
             PACKAGE_NAME="myapp.zip"
 
-            gh pkg publish artifacts/myapp.zip -r REPOSITORY_NAME
+            gh release create $RELEASE_TAG $FILE_PATH --repo $REPOSITORY_OWNER/$REPOSITORY_NAME
   #      - run:
 #          name: Publish to GitHub
 #          command: |
