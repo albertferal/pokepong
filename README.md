@@ -51,3 +51,5 @@
     ![Pipeline](Screenshots/argocd2.jpg)
 
     ![Pipeline](Screenshots/argocd3.jpg)
+
+    Vídeo explicativo de la prráctica >> https://www.loom.com/share/793d1245e05f4d2c81911e2b7afd4a06
