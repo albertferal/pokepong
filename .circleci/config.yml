@@ -81,7 +81,7 @@ jobs:
           name: Publish to GitHub Packages
           command: |
             FILE_PATH="artifacts/myapp.zip"
-            TOKEN="$GITHUB_TOKEN"
+            TOKEN="$ART_TKN"
             REPOSITORY_OWNER="albertferal"
             REPOSITORY_NAME="artifact-circleci"
             PACKAGE_NAME="myapp.zip"
@@ -108,6 +108,7 @@ workflows:
           requires:
             - job-tests
       - job-create-deploy-artifact:
+          context: ArtifactGH
           requires:
             - job-vulnerability
           filters:
