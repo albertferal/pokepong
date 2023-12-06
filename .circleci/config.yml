@@ -88,10 +88,11 @@ jobs:
           name: Obtener RELEASE_TAG
           command: |
             LAST_RELEASE=$(gh release list --repo albertferal/artifact-circleci --limit 1 | awk '{print $1}')
-            OLD_VERSION=$(echo $LAST_RELEASE | sed 's/v//')
-            NEW_VERSION=$(echo "$OLD_VERSION + 1" | bc)
+            OLD_VERSION=${LAST_RELEASE#"v"} 
+            NEW_VERSION=$((OLD_VERSION + 1))
             export RELEASE_TAG="v$NEW_VERSION"
             echo "export RELEASE_TAG=$RELEASE_TAG" >> $BASH_ENV
+    - run:
       - run:
           name: Publish to GitHub Packages
           command: |
