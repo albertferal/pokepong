@@ -3,17 +3,16 @@ version: 2.1
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
 
-
 executors:
   pythonpygame:
     docker:
-      - image: feralbert90/pokepong1:latest  # Dockerfile que se necesita de dockerhub
+      - image: feralbert90/pokepong1:latest  
 
 jobs:
   job-tests:
     executor: pythonpygame
     steps:
-      - checkout  # Para obtener el código del repositorio
+      - checkout  
       - run:
           name: Run tests
           command: | 
@@ -84,7 +83,6 @@ jobs:
             git add artifacts/myapp.zip
             git commit -m "Agregar artefacto myapp.zip"
             git push origin main
-
     
 workflows:
   workflow-testing:
