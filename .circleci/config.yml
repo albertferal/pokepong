@@ -73,42 +73,17 @@ jobs:
           name: Package artifact
           command: cd Game && zip -r ../artifacts/myapp.zip ./*
       - run:
-          name: Install GitHub CLI
-          command: |
-            curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-            apt-get update
-            apt-get install gh -y
-      - run:
           name: Set Git Identity
           command: |
             git config user.email "albertferal@gmail.com"
             git config user.name "albertferal"
       - run:
-          name: Obtener RELEASE_TAG
+          name: Publish to GitHub
           command: |
-            LAST_RELEASE=$(gh release list --repo albertferal/artifact-circleci --limit 1 | awk '{print $1}')
-            OLD_VERSION=${LAST_RELEASE#"v"} 
-            NEW_VERSION=$((OLD_VERSION + 1))
-            export RELEASE_TAG="v$NEW_VERSION"
-            echo "export RELEASE_TAG=$RELEASE_TAG" >> $BASH_ENV
-      - run:
-          name: Publish to GitHub Packages
-          command: |
-            FILE_PATH="artifacts/myapp.zip"
-            TOKEN="$ART_TKN"
-            REPOSITORY_OWNER="albertferal"
-            REPOSITORY_NAME="artifact-try"
-            PACKAGE_NAME="myapp.zip"
-
-            gh release create $RELEASE_TAG $FILE_PATH --repo $REPOSITORY_OWNER/$REPOSITORY_NAME
-#      - run:
-#          name: Publish to GitHub
-#          command: |
-#            git remote set-url origin https://$GITHUB_TOKEN@github.com/albertferal/artifact-circleci.git
-#            git add artifacts/myapp.zip
-#            git commit -m "Agregar artefacto myapp.zip"
-#            git push origin mainn
+            git remote set-url origin https://$GITHUB_TOKEN@github.com/albertferal/artifact-try.git
+            git add artifacts/myapp.zip
+            git commit -m "Agregar artefacto myapp.zip"
+            git push origin mainn
 
     
 workflows:
@@ -120,7 +95,6 @@ workflows:
           requires:
             - job-tests
       - job-create-deploy-artifact:
-          context: ArtifactGH
           requires:
             - job-vulnerability
           filters:
