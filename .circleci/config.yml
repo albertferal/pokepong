@@ -98,7 +98,7 @@ jobs:
             FILE_PATH="artifacts/myapp.zip"
             TOKEN="$ART_TKN"
             REPOSITORY_OWNER="albertferal"
-            REPOSITORY_NAME="artifact-circleci"
+            REPOSITORY_NAME="artifact-try"
             PACKAGE_NAME="myapp.zip"
 
             gh release create $RELEASE_TAG $FILE_PATH --repo $REPOSITORY_OWNER/$REPOSITORY_NAME
